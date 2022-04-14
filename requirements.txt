@@ -21,3 +21,4 @@ toml
 typing_extensions
 uvicorn
 wincertstore
+python-dotenv

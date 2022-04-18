@@ -14,11 +14,11 @@ f = Fernet(key)
 
 usuario = APIRouter()
 
-@usuario.get("/usuarios", response_model = List[Usuario], tags=["usuarios"])
+@usuario.get("/usuarios", response_model = List[Usuario], tags=["Usuarios"])
 def get_usuarios():
     return conn.execute(usuarios.select()).fetchall()
 
-@usuario.get("/usuarios/{id}", response_model = Usuario, tags=["usuarios"])
+@usuario.get("/usuarios/{id}", response_model = Usuario, tags=["Usuarios"])
 def get_usuario(id: str):
     return conn.execute(usuarios.select().where(usuarios.columns.id == id)).first()
 
@@ -29,12 +29,12 @@ def create_usuario(usuario: Usuario):
     result = conn.execute(usuarios.insert().values(new_user))
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario == result.lastrowid)).first()
 
-@usuario.delete("/usuarios/{id}", status_code = status.HTTP_204_NO_CONTENT, tags=["usuarios"])
+@usuario.delete("/usuarios/{id}", status_code = status.HTTP_204_NO_CONTENT, tags=["Usuarios"])
 def delete_usuario(id: str):
     conn.execute(usuarios.delete().where(usuarios.columns.id_usuario == id))
     return Response(status_code=HTTP_204_NO_CONTENT)
 
-@usuario.put("/usuarios/{id}", response_model = Usuario, tags=["usuarios"])
+@usuario.put("/usuarios/{id}", response_model = Usuario, tags=["Usuarios"])
 def update_usuario(id: str, usuario: Usuario):
     conn.execute(usuarios.update().values(nombre = usuario.nombre, email = usuario.email, password =f.encrypt(usuario.password.encode("utf-8"))).where(usuarios.columns.id == id))
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario==id)).first()

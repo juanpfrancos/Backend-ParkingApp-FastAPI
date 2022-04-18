@@ -10,7 +10,7 @@ from sqlalchemy import join, select
 
 tarifaCompuesta = APIRouter()
 
-@tarifaCompuesta.get("/tarifasCompuestas", response_model = List[TarifaCompuesta], tags=["tarifasCompuestas"])
+@tarifaCompuesta.get("/tarifasCompuestas", response_model = List[TarifaCompuesta], tags=["Tarifas Compuestas"])
 def get_tarifas():
     j=vehiculos.join(tarifas, vehiculos.columns.id_vehiculo == tarifas.columns.id_tarifa)
     return conn.execute(select([vehiculos, tarifas]).select_from(j)).fetchall()

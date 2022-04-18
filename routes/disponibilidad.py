@@ -9,6 +9,6 @@ from sqlalchemy import select, func
 
 disponibilidad = APIRouter()
 
-@disponibilidad.get("/disponibilidad/{id}", response_model = Disponibilidad, tags=["disponibilidad"])
+@disponibilidad.get("/disponibilidad/{id}", response_model = Disponibilidad, tags=["Disponibilidad"])
 def get_disponibilidad(id: str):
     return conn.execute(select(func.count().label('total_cupo')).select_from(registros).where((registros.columns.tipo_vehiculo == id) & (registros.columns.borrado == '0') & (registros.columns.total_costo == None))).first()

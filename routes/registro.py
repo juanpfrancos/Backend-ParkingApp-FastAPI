@@ -8,20 +8,20 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 registro = APIRouter()
 
-@registro.get("/registros", response_model = List[Registro], tags=["registros"])
+@registro.get("/registros", response_model = List[Registro], tags=["Registros"])
 def get_registros():
     return conn.execute(registros.select()).fetchall()
 
-@registro.get("/registros/{id}", response_model = Registro, tags=["registros"])
+@registro.get("/registros/{id}", response_model = Registro, tags=["Registros"])
 def get_registro(id: str):
     return conn.execute(registros.select().where(registros.columns.id_registro == id)).first()
 
-@registro.put("/registros/{id}", response_model = Registro, tags=["registros"])
+@registro.put("/registros/{id}", response_model = Registro, tags=["Registros"])
 def update_tarifa(id: str, registro: Registro):
     conn.execute(registros.update().values(cuarto_hora = registro.cuarto_hora, hora = registro.hora, seis_horas = registro.seis_horas, dia = registro.dia, mes = registro.mes).where(registros.columns.id_registros == id))
     return conn.execute(registros.select().where(registros.columns.id_registro == id)).first()
 
-@registro.post("/registros", response_model = Registro, tags=["registros"])
+@registro.post("/registros", response_model = Registro, tags=["Registros"])
 def create_registro(registro: Registro):
     nuevo_registro={"placa": registro.placa, 
                     "tipo_vehiculo": registro.tipo_vehiculo, 

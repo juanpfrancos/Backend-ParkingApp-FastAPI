@@ -12,22 +12,22 @@ app = FastAPI(
     description="Desarrollado por Christian Arenas y Juan Pablo Franco",
     openapi_tags=[
     {
-        "name": "users",
-        "description": "users routes"
-    },{
-        "name": "vehiculos",
+        "name": "Vehículos",
         "description": "vehiculos routes"        
     },{
-        "name": "tarifas",
+        "name": "Tarifas",
         "description": "tarifas routes"  
     },{
-        "name": "tarifasCompuestas",
+        "name": "Tarifas Compuestas",
         "description": "tarifasCompuestas routes"  
     },{
-        "name": "disponibilidad",
+        "name": "Disponibilidad",
         "description": "disponibilidad routes"  
     },{
-        "name": "registros",
+        "name": "Registros",
+        "description": "registros routes"  
+    },{
+        "name": "Usuarios",
         "description": "registros routes"  
     }
     ]

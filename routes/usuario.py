@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Response, status
+from typing import List
 from config.db import conn
 from models.usuario import usuarios
 from schemas.usuario import Usuario, Login 
@@ -13,7 +14,7 @@ f = Fernet(key)
 
 usuario = APIRouter()
 
-@usuario.get("/usuarios", response_model = list[Usuario], tags=["usuarios"])
+@usuario.get("/usuarios", response_model = List[Usuario], tags=["usuarios"])
 def get_usuarios():
     return conn.execute(usuarios.select()).fetchall()
 

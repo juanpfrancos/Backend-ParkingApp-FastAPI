@@ -1,4 +1,5 @@
 import imp
+from typing import List
 from fastapi import APIRouter, Response, status
 from config.db import conn
 from models.registro import registros
@@ -7,7 +8,7 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 registro = APIRouter()
 
-@registro.get("/registros", response_model = list[Registro], tags=["registros"])
+@registro.get("/registros", response_model = List[Registro], tags=["registros"])
 def get_registros():
     return conn.execute(registros.select()).fetchall()
 

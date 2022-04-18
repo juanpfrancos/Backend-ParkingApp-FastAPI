@@ -1,4 +1,5 @@
 import imp
+from typing import List
 from fastapi import APIRouter, Response, status
 from config.db import conn
 from models.tarifa import tarifas
@@ -9,7 +10,7 @@ from sqlalchemy import join, select
 
 tarifaCompuesta = APIRouter()
 
-@tarifaCompuesta.get("/tarifasCompuestas", response_model = list[TarifaCompuesta], tags=["tarifasCompuestas"])
+@tarifaCompuesta.get("/tarifasCompuestas", response_model = List[TarifaCompuesta], tags=["tarifasCompuestas"])
 def get_tarifas():
     j=vehiculos.join(tarifas, vehiculos.columns.id_vehiculo == tarifas.columns.id_tarifa)
     return conn.execute(select([vehiculos, tarifas]).select_from(j)).fetchall()

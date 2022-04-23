@@ -24,7 +24,7 @@ def get_usuarios():
 def get_usuario(id: str):
     return conn.execute(usuarios.select().where(usuarios.columns.id == id)).first()
 
-@usuario.post("/usuarios", response_model = Usuario, tags=["Sign Up"])
+@usuario.post("/usuarios/signup", response_model = Usuario, tags=["Sign Up"])
 def create_usuario(usuario: Usuario):
     new_user={"nombre": usuario.nombre, "email":usuario.email, "rol":usuario.rol}
     new_user["password"] = f.encrypt(usuario.password.encode("utf-8"))

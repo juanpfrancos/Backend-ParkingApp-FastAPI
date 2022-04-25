@@ -30,12 +30,7 @@ def create_usuario(usuario: Usuario):
     new_user["password"] = f.encrypt(usuario.password.encode("utf-8"))
     result = conn.execute(usuarios.insert().values(new_user))
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario == result.lastrowid)).first()
-'''
-@usuario.delete("/usuarios/{id}", status_code = status.HTTP_204_NO_CONTENT, tags=["Usuarios"])
-def delete_usuario(id: str):
-    conn.execute(usuarios.delete().where(usuarios.columns.id_usuario == id))
-    return Response(status_code=HTTP_204_NO_CONTENT)
-'''
+
 @usuario.delete("/usuarios/{id}", status_code = status.HTTP_204_NO_CONTENT, tags=["Usuarios"], dependencies=[Depends(JWTBearer())])
 def delete_usuario(id: str):
     conn.execute(usuarios.update().values(activo = 0).where(usuarios.columns.id_usuario == id))

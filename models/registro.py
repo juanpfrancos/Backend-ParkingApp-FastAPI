@@ -11,7 +11,7 @@ registros = Table("registros", meta,
     Column("salida", DateTime),
     Column("total_horas", Numeric(8)),
     Column("total_costo", Numeric(8)),
-    Column("borrado", Boolean),
+    Column("activo", Boolean),
     Column("tipo_tarifa", Integer)
 )
 

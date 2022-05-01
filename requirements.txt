@@ -6,3 +6,4 @@ PyMySQL
 SQLAlchemy
 cryptography
 python-dotenv
+gunicorn

@@ -10,9 +10,13 @@ registros = Table("registros", meta,
     Column("ingreso", DateTime),
     Column("salida", DateTime),
     Column("total_horas", Numeric(8)),
+    Column("pago_inicial", Numeric(8)),
+    Column("pago_final", Numeric(8)),
     Column("total_costo", Numeric(8)),
-    Column("activo", Boolean),
-    Column("tipo_tarifa", Integer)
+    Column("registro_activo", Boolean),
+    Column("realizo", String(60)),
+    Column("tipo_tarifa", Integer),
+    Column("en_parqueadero", Boolean)
 )
 
 meta.create_all(engine)

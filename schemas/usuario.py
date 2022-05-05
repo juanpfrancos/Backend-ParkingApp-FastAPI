@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel, Field, EmailStr
 
 class Usuario(BaseModel):
-    id_usuario: Optional[str]
+    id_usuario: Optional[int]
     nombre: str = Field(...)
     email: EmailStr = Field(...)
     password: str = Field(...)

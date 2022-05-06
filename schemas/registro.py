@@ -20,7 +20,7 @@ class Registro(BaseModel):
 class Ingreso(BaseModel):
     placa: str = Field(...)
     tipo_vehiculo: int = Field(...)
-    realizo: str = Field(...)
+    realizo: int = Field(...)
     tipo_tarifa: int = Field(...)
     class Config:
         schema_extra = {

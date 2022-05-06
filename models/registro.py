@@ -14,7 +14,7 @@ registros = Table("registros", meta,
     Column("pago_final", Numeric(8)),
     Column("total_costo", Numeric(8)),
     Column("registro_activo", Boolean),
-    Column("realizo", String(60)),
+    Column("realizo", Integer),
     Column("tipo_tarifa", Integer),
     Column("en_parqueadero", Boolean)
 )

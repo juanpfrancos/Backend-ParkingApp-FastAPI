@@ -13,7 +13,7 @@ class Registro(BaseModel):
     pago_final: Optional[float]
     total_costo: Optional[float]
     registro_activo: Optional[bool]
-    realizo: str
+    nombre: str
     tipo_tarifa: int
     en_parqueadero: Optional[bool]
     

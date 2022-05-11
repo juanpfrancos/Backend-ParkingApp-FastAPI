@@ -17,28 +17,28 @@ f = Fernet(key)
 usuario = APIRouter()
 
 @usuario.get("/usuarios", response_model = List[Usuario], tags=["Usuarios"])
-def get_usuarios():
+async def get_usuarios():
     return conn.execute(usuarios.select()).fetchall()
 
 @usuario.get("/usuarios/{id}", response_model = Usuario, tags=["Usuarios"])
-def get_usuario(id: int):
+async def get_usuario(id: int):
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario == id)).first()
 
 @usuario.post("/usuarios/signup", response_model = Usuario, tags=["Sign Up"])
-def create_usuario(usuario: Usuario):
+async def create_usuario(usuario: Usuario):
     new_user={"nombre": usuario.nombre, "email":usuario.email, "rol":usuario.rol}
     new_user["password"] = f.encrypt(usuario.password.encode("utf-8"))
     result = conn.execute(usuarios.insert().values(new_user))
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario == result.lastrowid)).first()
 
 @usuario.delete("/usuarios/{id}", status_code = status.HTTP_204_NO_CONTENT, tags=["Usuarios"], dependencies=[Depends(JWTBearer())])
-def delete_usuario(id: str):
+async def delete_usuario(id: str):
     conn.execute(usuarios.update().values(activo = 0).where(usuarios.columns.id_usuario == id))
     return Response(status_code=HTTP_204_NO_CONTENT)
 
 
 @usuario.put("/usuarios/{id}", response_model = Usuario, tags=["Usuarios"], dependencies=[Depends(JWTBearer())])
-def update_usuario(id: str, usuario: Usuario):
+async def update_usuario(id: str, usuario: Usuario):
     conn.execute(usuarios.update().values(nombre = usuario.nombre, email = usuario.email, password =f.encrypt(usuario.password.encode("utf-8")), rol = usuario.rol).where(usuarios.columns.id_usuario == id))
     return conn.execute(usuarios.select().where(usuarios.columns.id_usuario==id)).first()
 

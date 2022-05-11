@@ -11,7 +11,7 @@ from sqlalchemy import select, func, subquery
 disponibilidad = APIRouter()
 
 @disponibilidad.get("/disponibilidad/{tipo_vehiculo}/{tipo_tarifa}", response_model = Disponibilidad, tags=["Disponibilidad"])
-def get_disponibilidad(tipo_vehiculo: int, tipo_tarifa: int):
+async def get_disponibilidad(tipo_vehiculo: int, tipo_tarifa: int):
     if tipo_tarifa == 1 or tipo_tarifa == 2 or tipo_tarifa == 3:
         return conn.execute(select((vehiculos.columns.capacidad/2).label('capacidad'), ((select(func.count()).select_from(registros).where((registros.columns.tipo_vehiculo == tipo_vehiculo) & (registros.columns.registro_activo == '1') & (registros.columns.en_parqueadero == '1') & (registros.columns.tipo_tarifa == tipo_tarifa)))).label('ocupados')).select_from(vehiculos).where(vehiculos.columns.id_vehiculo == tipo_vehiculo)).first()
     elif tipo_tarifa == 4:

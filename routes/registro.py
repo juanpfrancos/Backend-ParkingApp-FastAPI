@@ -12,16 +12,16 @@ from sqlalchemy import select
 registro = APIRouter()
 
 @registro.get("/registros/{en_parqueadero}", response_model = List[RegistroGet], tags=["Registros"])
-def get_registros(io: bool):
+async def get_registros(io: bool):
     j=registros.join(usuarios, registros.columns.realizo == usuarios.columns.id_usuario).join(vehiculos, registros.columns.tipo_vehiculo == vehiculos.columns.id_vehiculo)
     return conn.execute(select([usuarios, registros, vehiculos]).select_from(j).where((registros.columns.en_parqueadero == io) & (registros.columns.registro_activo == '1'))).fetchall()
 
 @registro.get("/registros/{id}", response_model = Registro, tags=["Registros"])
-def get_registro(id: int):
+async def get_registro(id: int):
     return conn.execute(registros.select().where(registros.columns.id_registro == id)).first()
 
 @registro.post("/registros", response_model = Ingreso, tags=["Registros"])
-def ingresar_vehiculo(ingreso: Ingreso):
+async def ingresar_vehiculo(ingreso: Ingreso):
     nuevo_ingreso={"placa": ingreso.placa, 
                     "tipo_vehiculo": ingreso.tipo_vehiculo,
                     "realizo": ingreso.realizo,
@@ -31,11 +31,11 @@ def ingresar_vehiculo(ingreso: Ingreso):
     return conn.execute(registros.select().where(registros.columns.id_registro == resultado.lastrowid)).first()
 
 @registro.put("/registros/{id}", response_model = Registro, tags=["Registros"])
-def sacar_vehiculo(id: int):
+async def sacar_vehiculo(id: int):
     conn.execute(registros.update().values(en_parqueadero = 0).where(registros.columns.id_registro == id))
     return conn.execute(registros.select().where(registros.columns.id_registro == id)).first()
 
 @registro.delete("/registros/{id}", response_model = Registro, tags=["Registros"])
-def delete_registro(id: int):
+async def delete_registro(id: int):
     conn.execute(registros.update().values(registro_activo = 0).where(registros.columns.id_registro == id))
     return Response(status_code=HTTP_204_NO_CONTENT)

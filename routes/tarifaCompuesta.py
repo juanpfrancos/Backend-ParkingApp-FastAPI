@@ -6,7 +6,7 @@ from models.tarifa import tarifas
 from models.vehiculo import vehiculos
 from schemas.tarifaCompuesta import TarifaCompuesta
 from starlette.status import HTTP_204_NO_CONTENT
-from sqlalchemy import join, select
+from sqlalchemy import select
 
 tarifaCompuesta = APIRouter()
 

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class TarifaCompuesta(BaseModel):
     id_vehiculo: Optional[int]
-    tipo_vehiculo: str
+    nombre_vehiculo: str
     cuarto_hora: float
     hora: float
     seis_horas: float

@@ -4,16 +4,17 @@ from fastapi import APIRouter, Response, status
 from config.db import conn
 from models.registro import registros
 from models.usuario import usuarios
-from schemas.registro import Registro, Ingreso
+from models.vehiculo import vehiculos
+from schemas.registro import Registro, Ingreso, RegistroGet
 from starlette.status import HTTP_204_NO_CONTENT
 from sqlalchemy import select
 
 registro = APIRouter()
 
-@registro.get("/registros/{en_parqueadero}", response_model = List[Registro], tags=["Registros"])
+@registro.get("/registros/{en_parqueadero}", response_model = List[RegistroGet], tags=["Registros"])
 def get_registros(io: bool):
-    j=registros.join(usuarios, registros.columns.realizo == usuarios.columns.id_usuario)
-    return conn.execute(select([usuarios, registros]).select_from(j).where((registros.columns.en_parqueadero == io) & (registros.columns.registro_activo == '1'))).fetchall()
+    j=registros.join(usuarios, registros.columns.realizo == usuarios.columns.id_usuario).join(vehiculos, registros.columns.tipo_vehiculo == vehiculos.columns.id_vehiculo)
+    return conn.execute(select([usuarios, registros, vehiculos]).select_from(j).where((registros.columns.en_parqueadero == io) & (registros.columns.registro_activo == '1'))).fetchall()
 
 @registro.get("/registros/{id}", response_model = Registro, tags=["Registros"])
 def get_registro(id: int):

@@ -21,8 +21,8 @@ def get_usuarios():
     return conn.execute(usuarios.select()).fetchall()
 
 @usuario.get("/usuarios/{id}", response_model = Usuario, tags=["Usuarios"])
-def get_usuario(id: str):
-    return conn.execute(usuarios.select().where(usuarios.columns.id == id)).first()
+def get_usuario(id: int):
+    return conn.execute(usuarios.select().where(usuarios.columns.id_usuario == id)).first()
 
 @usuario.post("/usuarios/signup", response_model = Usuario, tags=["Sign Up"])
 def create_usuario(usuario: Usuario):

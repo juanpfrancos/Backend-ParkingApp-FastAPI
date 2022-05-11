@@ -13,6 +13,21 @@ class Registro(BaseModel):
     pago_final: Optional[float]
     total_costo: Optional[float]
     registro_activo: Optional[bool]
+    realizo: int
+    tipo_tarifa: int
+    en_parqueadero: Optional[bool]
+    
+class RegistroGet(BaseModel):
+    id_registro: Optional[int]
+    placa: str
+    nombre_vehiculo: str
+    ingreso: Optional[datetime]
+    salida: Optional[datetime]
+    total_horas: Optional[float]
+    pago_inicial: Optional[float]
+    pago_final: Optional[float]
+    total_costo: Optional[float]
+    registro_activo: Optional[bool]
     nombre: str
     tipo_tarifa: int
     en_parqueadero: Optional[bool]

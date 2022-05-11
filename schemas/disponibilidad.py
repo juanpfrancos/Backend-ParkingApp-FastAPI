@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class Disponibilidad(BaseModel):
-    disponibles: int
+    capacidad: int
     ocupados: int

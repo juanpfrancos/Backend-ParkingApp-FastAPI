@@ -14,7 +14,7 @@ def get_tarifas():
     return conn.execute(tarifas.select()).fetchall()
 
 @tarifa.get("/tarifas/{id}", response_model = Tarifa, tags=["Tarifas"])
-def get_tarifa(id: str):
+def get_tarifa(id: int):
     return conn.execute(tarifas.select().where(tarifas.columns.id_tarifa == id)).first()
 
 @tarifa.put("/tarifas/{id}", response_model = Tarifa, tags=["Tarifas"])

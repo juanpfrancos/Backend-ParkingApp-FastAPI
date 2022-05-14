@@ -11,7 +11,7 @@ from sqlalchemy import select
 
 registro = APIRouter()
 
-@registro.get("/registros/{en_parqueadero}", response_model = List[RegistroGet], tags=["Registros"])
+@registro.get("/registros/{io}", response_model = List[RegistroGet], tags=["Registros"])
 async def get_registros(io: bool):
     j=registros.join(usuarios, registros.columns.realizo == usuarios.columns.id_usuario).join(vehiculos, registros.columns.tipo_vehiculo == vehiculos.columns.id_vehiculo)
     return conn.execute(select([usuarios, registros, vehiculos]).select_from(j).where((registros.columns.en_parqueadero == io) & (registros.columns.registro_activo == '1'))).fetchall()

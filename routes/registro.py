@@ -30,7 +30,7 @@ async def ingresar_vehiculo(ingreso: Ingreso):
     resultado = conn.execute(registros.insert().values(nuevo_ingreso))
     return conn.execute(registros.select().where(registros.columns.id_registro == resultado.lastrowid)).first()
 
-@registro.put("/registros/{id}", response_model = Registro, tags=["Registros"])
+@registro.delete("/registro/{id}", response_model = Registro, tags=["Registros"])
 async def sacar_vehiculo(id: int):
     conn.execute(registros.update().values(en_parqueadero = 0).where(registros.columns.id_registro == id))
     return conn.execute(registros.select().where(registros.columns.id_registro == id)).first()

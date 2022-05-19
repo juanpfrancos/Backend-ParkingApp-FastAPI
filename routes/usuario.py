@@ -45,6 +45,7 @@ async def update_usuario(id: str, usuario: Usuario):
 @usuario.post("/usuarios/login", tags=["Login"])
 async def user_login(user: Login = Body(...)):
     exist_consult = conn.execute(usuarios.select().where(usuarios.columns.email == user.email)).first()
+    db_id = exist_consult[0]
     db_rol = exist_consult[4]
     db_activo = exist_consult[5]
     if exist_consult != None and db_activo == True:
@@ -53,10 +54,10 @@ async def user_login(user: Login = Body(...)):
         db_decrypted = f.decrypt(pass_db)
         if input_pass == db_decrypted and db_rol == 'operario':
             print('Logueado operario')
-            return signJWT(user.email, db_rol)
+            return signJWT(db_id, db_rol)
         elif input_pass == db_decrypted and db_rol == 'administrador':
             print('Logueado administrador')
-            return signJWT(user.email, db_rol)
+            return signJWT(db_id, db_rol)
         else:
             print('PassIncorrect')
             return Response(status_code=400)

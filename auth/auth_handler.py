@@ -22,9 +22,7 @@ def signJWT(id_usuario: int, rol: str) -> Dict[int, str]:
         "expires": time.time() + 600
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
-
     return token_response(token)
-
 
 def decodeJWT(token: str) -> dict:
     try:
